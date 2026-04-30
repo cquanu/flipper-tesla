@@ -4,22 +4,26 @@
 void tesla_fsd_scene_about_on_enter(void* context) {
     TeslaFSDApp* app = context;
 
-    widget_reset(app->widget);
-    widget_add_string_element(
-        app->widget, 64, 2, AlignCenter, AlignTop, FontPrimary,
-        "Tesla FSD Unlock");
+    text_box_reset(app->text_box);
+    text_box_set_font(app->text_box, TextBoxFontSecondary);
+    text_box_set_focus(app->text_box, TextBoxFocusStart);
 
-    widget_add_string_element(
-        app->widget, 64, 14, AlignCenter, AlignTop, FontSecondary,
-        "v" TESLA_FSD_VERSION);
-
-    widget_add_string_multiline_element(
-        app->widget, 64, 28, AlignCenter, AlignTop, FontSecondary,
-        "HW3/HW4/Legacy + Force FSD\n"
+    text_box_set_text(
+        app->text_box,
+        "Tesla FSD Unlock v" TESLA_FSD_VERSION "\n"
+        "\n"
+        "HW3 / HW4 / Legacy + Force FSD\n"
         "Chime suppress, Emerg. detect\n"
-        "github.com/hypery11/flipper-tesla-fsd");
+        "Nag killer, Track mode,\n"
+        "BMS dashboard, Blind spot alert,\n"
+        "High beam strobe, Speed display,\n"
+        "Steering mode + more.\n"
+        "\n"
+        "Works via OBD-II or X179 connector.\n"
+        "\n"
+        "github.com/cquanu/flipper-tesla");
 
-    view_dispatcher_switch_to_view(app->view_dispatcher, TeslaFSDViewWidget);
+    view_dispatcher_switch_to_view(app->view_dispatcher, TeslaFSDViewTextBox);
 }
 
 bool tesla_fsd_scene_about_on_event(void* context, SceneManagerEvent event) {
@@ -30,5 +34,5 @@ bool tesla_fsd_scene_about_on_event(void* context, SceneManagerEvent event) {
 
 void tesla_fsd_scene_about_on_exit(void* context) {
     TeslaFSDApp* app = context;
-    widget_reset(app->widget);
+    text_box_reset(app->text_box);
 }
