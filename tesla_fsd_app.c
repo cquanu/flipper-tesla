@@ -42,6 +42,9 @@ TeslaFSDApp* tesla_fsd_app_alloc(void) {
     view_dispatcher_add_view(app->view_dispatcher, TeslaFSDViewVarItemList,
         variable_item_list_get_view(app->var_item_list));
 
+    app->text_box = text_box_alloc();
+    view_dispatcher_add_view(app->view_dispatcher, TeslaFSDViewTextBox, text_box_get_view(app->text_box));
+
     app->hw_version = TeslaHW_Unknown;
     fsd_state_init(&app->fsd_state, TeslaHW_Unknown);
 
@@ -63,10 +66,12 @@ void tesla_fsd_app_free(TeslaFSDApp* app) {
     view_dispatcher_remove_view(app->view_dispatcher, TeslaFSDViewSubmenu);
     view_dispatcher_remove_view(app->view_dispatcher, TeslaFSDViewWidget);
     view_dispatcher_remove_view(app->view_dispatcher, TeslaFSDViewVarItemList);
+    view_dispatcher_remove_view(app->view_dispatcher, TeslaFSDViewTextBox);
 
     submenu_free(app->submenu);
     widget_free(app->widget);
     variable_item_list_free(app->var_item_list);
+    text_box_free(app->text_box);
 
     scene_manager_free(app->scene_manager);
     view_dispatcher_free(app->view_dispatcher);
